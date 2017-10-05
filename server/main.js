@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import '../imports/startup/simple-schema-configuration.js';
+import moment from 'moment';
 
 import '../imports/api/users';
 import { Links } from '../imports/api/links';
@@ -15,6 +16,7 @@ Meteor.startup(() => {
         res.statusCode = 302;
         res.setHeader('Location', link.url);
         res.end();
+        Meteor.call('links.trackVisit', _id);
       } else {
         next();
       }
